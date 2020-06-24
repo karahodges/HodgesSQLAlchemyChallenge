@@ -33,6 +33,12 @@ def precip():
     results= session.query(Measurement.date,Measurement.prcp).all()
     session.close()
     
+
+@app.route('/api/v1.0/stations')
+def station_list():
+    session= Session(engine)
+    results= session.query(Station.station, Station.name, Station.latitude, Station.longitude, Station.elevation).all()
+
     all_precips=[]
     for date,precip in results:
         precip_dict={}
@@ -40,10 +46,6 @@ def precip():
         precip_dict['precipitation']=precips
         all_precips.append(precip_dict)
     return jsonify(all_precips)
-@app.route('/api/v1.0/stations')
-    session=Session(engine)
-def station_list():
-    return jsonify(Station.name)
     
 @app.route('/api/v1.0/tobs')
     session=Session(engine)
@@ -51,14 +53,16 @@ def station_list():
 
 
 @app.route('/api/v1.0/<start>')
-    session=Session(engine)
-    last_obs=session.query(Measurement.date).order_by(Measurement.date.desc()).first()
-    last_date=dt.datetime
+    def start(start):
+        end= ''
+        return jsonify(date(start,end)
+    
+
     
 
 @app.route('/api/v1.0/<start>/<end>')
-    session=Session(engine)
-    return jsonify
+    def start_end(start,end):
+        return jsonify(date(start,end)
 
 
 if __name__=='__main__':
